@@ -11,15 +11,9 @@ $(function () {
 
 
 });
-executeScriptToCurrentTab('var setCookie = function (name, value) {\
-	var Days = 30;\
-	var exp = new Date();\
-	exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);\
-	document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();\
-	console.log("这是popup向当前页发送的执行代码")\
-}')
-executeScriptToCurrentTab('console.log("这是popup立即执行的代码")')
+
 $('#set_cookie').click(function () {
+
 	var name = $('#set_cookie_name').val();
 	var value = $('#set_cookie_value').val()
 	executeScriptToCurrentTab(`setCookie('${name}','${value}')`)

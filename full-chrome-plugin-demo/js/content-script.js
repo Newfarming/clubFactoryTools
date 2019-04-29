@@ -1,9 +1,21 @@
 ﻿console.log('这是content script!');
+// eval('(' + e.data.code + ')');
 
+// executeScriptToCurrentTab('console.log("这是popup立即执行的代码")')
 // 注意，必须设置了run_at=document_start 此段代码才会生效
 document.addEventListener('DOMContentLoaded', function () {
 	// 注入自定义JS
 	injectCustomJs();
+	window.setCookie = function (name, value) {
+		var Days = 30;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+		document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+		console.log("这是popup向当前页发送的执行代码")
+	}
+	// document.setDD = 1
+	// console.log('window.setCookie', window.setCookie)
+	// console.log('document.setDD', document.setDD)
 	// 给谷歌搜索结果的超链接增加 _target="blank"
 	if (location.host == 'www.google.com.tw') {
 		var objs = document.querySelectorAll('h3.r a');
