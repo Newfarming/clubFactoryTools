@@ -19,7 +19,12 @@ function sendMessageToContentScriptByPostMessage(data) {
 		hiddenDiv.dispatchEvent(customEvent);
 	}
 	window.sendMessageToContentScriptByEvent = sendMessageToContentScriptByEvent;
-
-
-
 })();
+
+
+window.WebViewJavascriptBridge = {
+	callHandler: function (parm1, parm2, parm3) {
+		console.log('打点!!!', parm1, parm2, parm3)
+	}
+}
+console.log('injectJs')

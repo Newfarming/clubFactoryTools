@@ -74,7 +74,11 @@ function initCustomPanel() {
 		<div id="my_custom_log">
 		</div>
 	`;
+	// setTimeout(function () {
 	document.body.appendChild(panel);
+	console.log('panel', panel)
+	// }, 2000)
+
 }
 
 // 向页面注入JS
