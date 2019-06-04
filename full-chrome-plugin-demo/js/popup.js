@@ -11,7 +11,10 @@ $(function () {
 
 
 });
-
+$('.card_modal').click(function ()=> {
+	// console.log($(this).find('.card-body'))
+	$('.card-body').show()
+})
 $('#set_cookie').click(function () {
 
 	var name = $('#set_cookie_name').val();
@@ -23,6 +26,11 @@ $('#set_cookie').click(function () {
 	// console.log('setCookie ', $('#set_cookie_name'))
 })
 
+$('#login').click(function () {
+	var name = $('#login_account').val();
+	var value = $('#login_password').val()
+	executeScriptToCurrentTab(`setLogin('${name}','${value}')`)
+})
 // $('#set_cookie').click(() => {
 // 	sendMessageToContentScript({ cmd: 'update_font_size', size: 42 }, function (response) { });
 // });

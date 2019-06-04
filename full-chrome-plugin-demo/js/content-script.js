@@ -13,6 +13,70 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 		console.log("这是popup向当前页发送的执行代码")
 	}
+
+	window.setLogin = function (account, password) {
+		console.log('account, password', account, password)
+		// console.log('$', $)
+		var loginInfo = account;
+		var loginPwd = password;
+		// if (!loginInfo) {
+		// 	window.utils.toast.error('Please enter ' + $('.login-info').attr('placeholder'));
+		// 	return false;
+		// }
+
+		// if (!loginPwd) {
+		// 	window.utils.toast.error('Please enter password.');
+		// 	return false;
+		// }
+
+		var isPhone = window.utils.validatePhone(loginInfo);
+		var isEmail = window.utils.validateEmail(loginInfo);
+		var isNum = window.utils.validateNumber(loginInfo);
+
+		var loginType = isPhone ? 'Phone' : 'Email';
+
+		// if (isNewVersion && !isPhone && isNum) {
+		// 	window.utils.toast.error('Please enter a valid mobile number.');
+		// 	return false;
+		// } else if (!isNewVersion && !isEmail) {
+		// 	window.utils.toast.error('Please enter a valid email.');
+		// 	return false;
+		// }
+
+		// 如果全是数字那么走手机登录，否则邮箱登录,暂时不判断号码长度，因为不同国家的长度不一样，虽然现在只是在印度
+		window.utils.ajax({
+			type: 'POST',
+			url: '/auth2/login-valid',
+			data: {
+				login_account: loginInfo,
+				pwd: loginPwd,
+				redirect: '/user_center'
+			}
+		}, function (error) {
+			window.utils.GAEvents.GAMember('Login', 'Login with ' + loginType + ' & Failure:' + error);
+		}, $(this)).then(function (resp) {
+			if (resp) {
+				console.log('登录成功')
+				// 通知客户端更新性别，刷新分类等数据
+				// if (resp.sex_change_result && resp.sex_change_result.changed) {
+				// 	call_device("change_gender", resp.sex_change_result.gender)
+				// }
+				// var redirect_uri = resp.redirect_uri;
+				// if (resp.should_associate) {
+				// 	var queryString = location.search;
+				// 	if (queryString) {
+				// 		queryString += '&normal=1'
+				// 	} else {
+				// 		queryString = '?normal=1'
+				// 	}
+				// 	redirect_uri += queryString;
+				// }
+				// window.utils.GAEvents.GAMember('Login', 'Login with ' + loginType + ' & Success', function () {
+				// 	redirectAfterSuccess(redirect_uri);
+				// });
+			}
+		})
+	}
 	// document.setDD = 1
 	// console.log('window.setCookie', window.setCookie)
 	// console.log('document.setDD', document.setDD)
