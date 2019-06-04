@@ -4,116 +4,23 @@
 	<title>popup页</title>
 	<meta charset="utf-8"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<!-- ================= Favicon ================== -->
-    <!-- Standard -->
-    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
-    <!-- Retina iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
-    <!-- Retina iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
-    <!-- Standard iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
-    <!-- Standard iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
-
-	<!-- Styles -->
-    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="assets/css/lib/mmc-chat.css" rel="stylesheet" />
-    <link href="assets/css/lib/sidebar.css" rel="stylesheet">
-    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/lib/simdahs.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
 	<style>
 	body {
 		font-family: 'Microsoft Yahei';
-		width: 800px;
+		width: 500px;
 		min-height: 100px;
-
 	}
 	a {margin-right: 10px;}
-	.g-grid{
-		border-bottom: 1px solid red;
-		padding:10px;
-	}
 	</style>
 </head>
 <body>
-<div class="g-grid">
-      <div class="col-lg-6 card_modal">
-					<div class="card alert">
-							<div class="card-header">
-									<h4>Horizontal Form</h4>
-									<div class="card-header-right-icon">
-											<ul>
-													<li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
-													<li class="doc-link"><a href="#"><i class="ti-link"></i></a></li>
-											</ul>
-									</div>
-							</div>
-							<div  class="card-body">
-									<div class="horizontal-form">
-											<form class="form-horizontal">
-													<div class="form-group">
-															<label class="col-sm-2 control-label">Email</label>
-															<div class="col-sm-10">
-																	<input type="email" class="form-control" placeholder="Email">
-															</div>
-													</div>
-													<div class="form-group">
-															<label class="col-sm-2 control-label">Password</label>
-															<div class="col-sm-10">
-																	<input type="password" class="form-control" placeholder="Password">
-															</div>
-													</div>
-													<div class="form-group">
-															<div class="col-sm-offset-2 col-sm-10">
-																	<div class="checkbox">
-																			<label>
-																					<input type="checkbox"> Remember me
-																			</label>
-																	</div>
-															</div>
-													</div>
-													<div class="form-group">
-															<div class="col-sm-offset-2 col-sm-10">
-																	<button type="submit" class="btn btn-default">Sign in</button>
-															</div>
-													</div>
-											</form>
-									</div>
-							</div>
-					</div>
-			</div><!-- /# column -->
-<div class="page-header bg-primary">
-		<h3>
-		club Factory
-		</h3>
+	<h1>这是一个popup页面！</h1>
+	<h2>clubFactory</h2>
+	<div>cookie设置
+	<p>变量名：<input type="text" id="set_cookie_name"  /></p>
+	<p>变量值：<input type="text" id="set_cookie_value" /></p>
+	<button id="set_cookie">设置</button>
 	</div>
-	<form class="form-inline bg-info">
-	<h4>账号切换设置</h4>
-  <div class="form-group">
-    <label for="exampleInputName2">Name</label>
-    <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail2">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-  </div>
-  <button type="submit" class="btn btn-default">Send invitation</button>
-</form>
-	<form class="form-inline">
-	<h4>cookie设置</h4>
-  <div class="form-group">
-    <label for="exampleInputName2">变量名：</label>
-    <input type="text" class="form-control" id="set_cookie_name" placeholder="Jane Doe">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail2">变量值：</label>
-    <input type="email" class="form-control" id="set_cookie_value" placeholder="jane.doe@example.com">
-  </div>
-  <button type="submit" class="btn btn-default" id="set_cookie">设置</button>
-</form>
 	<div>cookie设置
 	<p>url：<textarea></textarea></p>
 	<p>二维码图片：<img /></p>
@@ -128,8 +35,6 @@
 		<p><span id="decode"></span></p>
 		1234
 	</div>
-</div>
-
 
 
 
@@ -182,7 +87,6 @@
 		百度广告，右键菜单，omnibox，图片大小演示，devtools演示，sidebar演示，
 	</div>
 	<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
-	<script type="text/javascript" src="js/utils.js"></script>
 	<script type="text/javascript" src="js/popup.js"></script>
 </body>
 </html>

@@ -9,15 +9,6 @@ function sendMessageToContentScriptByPostMessage(data) {
 
 // 通过DOM事件发送消息给content-script
 (function () {
-	// window.setCookie = function (name, value) {
-	// 	var Days = 30;
-	// 	var exp = new Date();
-	// 	exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-	// 	document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
-	// 	console.log("这是popup向当前页发送的执行代码")
-	// 	console.log("name,value", name, value)
-	// }
-
 	var customEvent = document.createEvent('Event');
 	customEvent.initEvent('myCustomEvent', true, true);
 	// 通过事件发送消息给content-script
@@ -32,7 +23,8 @@ function sendMessageToContentScriptByPostMessage(data) {
 
 
 window.WebViewJavascriptBridge = {
-	callHandler: function () {
+	callHandler: function (parm1, parm2, parm3) {
+		console.log('打点!!!', parm1, parm2, parm3)
 	}
 }
 console.log('injectJs')
