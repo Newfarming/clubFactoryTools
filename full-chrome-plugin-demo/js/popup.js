@@ -7,11 +7,109 @@ $(function () {
 	});
 
 	// 初始化国际化
-	$('#test_i18n').html(chrome.i18n.getMessage("helloWorld"));
-
+	// $('#test_i18n').html(chrome.i18n.getMessage("helloWorld"));
 
 });
 
+var bol = ''
+var url = 'http://pre-pwa.clubfactory.com/home'
+
+var loginQrEle = document.getElementById('login_qr_box')
+function makeCode(qrEle, qrText) {
+	qrEle.innerHTML = ' '
+	var qrcode = new QRCode(qrEle, {
+		width: 100,
+		height: 100
+	});
+	qrcode.makeCode(qrText);
+}
+function loginInit() {
+	var qrword = url
+	makeCode(loginQrEle, qrword)
+}
+loginInit()
+$('.cf-item-title').click(function () {
+	$('.item-content').hide()
+	$(this).parent().find('.item-content').show()
+})
+$('#web_login_select').change(function (e) {
+	// console.log('e.target.value', e.target.value)
+	var value = e.target.value
+	var site = ''
+	if (value === 'Hiboss') {
+		$('#hiboss_login_select').show()
+		$('#m_login_select').hide()
+		$('#app_login_select').hide()
+		$('#loginBox').hide()
+
+		site = $('#hiboss_login_select').val()
+		url = 'https://' + site + '.hibossapp.com/home/#/'
+
+	} else if (value === 'ClubFactoryMsite') {
+		$('#app_login_select').hide()
+		$('#m_login_select').show()
+		$('#hiboss_login_select').hide()
+		$('#loginBox').show()
+
+		site = $('#m_login_select').val()
+		url = 'http://' + site + '.clubfactory.com/home'
+	} else if (value === 'ClubFactoryApp') {
+		$('#hiboss_login_select').hide()
+		$('#m_login_select').hide()
+		$('#app_login_select').show()
+		$('#loginBox').show()
+		site = $('#app_login_select').val()
+		url = 'http://' + site + '.fromfactory.club/product_list#/'
+	}
+	makeCode(loginQrEle, url)
+})
+$('#app_login_select').change(function (e) {
+	var site = e.target.value
+	url = 'http://' + app_site + '.fromfactory.club/product_list#/'
+	makeCode(loginQrEle, url)
+})
+$('#m_login_select').change(function (e) {
+	var site = e.target.value
+	url = 'http://' + site + '.clubfactory.com/home'
+	makeCode(loginQrEle, url)
+})
+$('#hiboss_login_select').change(function (e) {
+	var site = e.target.value
+	url = 'https://' + site + '.hibossapp.com/home/#/'
+	makeCode(loginQrEle, url)
+})
+$('#jump_login_url').click(function () {
+	// var url = ''
+	bol = $('#web_login_select').val()
+	var site = ''
+	if (bol === 'ClubFactoryApp') {
+		site = $('#app_login_select').val()
+		url = 'http://' + app_site + '.fromfactory.club/user_center'
+	} else if (bol === 'ClubFactoryMsite') {
+		site = $('#m_login_select').val()
+		url = 'http://' + site + '.clubfactory.com/home'
+	} else if (bol === 'Hiboss') {
+		site = $('#hiboss_login_select').val()
+		url = 'https://' + site + '.hibossapp.com/home/#/'
+	}
+	window.open(chrome.extension.getURL(url));
+})
+$('#jump_url').click(function () {
+
+	bol = $('#web_login_select').val()
+	var site = ''
+	if (bol === 'ClubFactoryApp') {
+		site = $('#app_login_select').val()
+		url = 'http://' + app_site + '.fromfactory.club/product_list#/'
+	} else if (bol === 'ClubFactoryMsite') {
+		site = $('#m_login_select').val()
+		url = 'http://' + site + '.clubfactory.com/home'
+	} else if (bol === 'Hiboss') {
+		site = $('#hiboss_login_select').val()
+		url = 'https://' + site + '.hibossapp.com/home/#/'
+	}
+	window.open(chrome.extension.getURL(url));
+})
 $('#set_cookie').click(function () {
 
 	var name = $('#set_cookie_name').val();
@@ -22,7 +120,93 @@ $('#set_cookie').click(function () {
 	// $('#set_cookie_value').val('');
 	// console.log('setCookie ', $('#set_cookie_name'))
 })
+$('#url_qr_input').change(function (e) {
+	console.log('e.target', e.target)
+	var urlQrEle = document.getElementById('url_qr_box')
+	makeCode(urlQrEle, e.target.value)
+})
+$('#url_qr_input').keyup(function (e) {
+	console.log('e.target', e.target)
+	var urlQrEle = document.getElementById('url_qr_box')
+	makeCode(urlQrEle, e.target.value)
+})
+$('#decodeUrl').click(function () {
+	var val = $('#code_input').val()
+	var decodeVal = decodeURIComponent(val)
+	console.log('decodeVal ', decodeVal)
+	alert('解码结果为：' + decodeVal)
+	// document.getElementById('code_box').innerHTML = decodeVal
+	// $('#code_box').html(decodeVal)
+})
+$('#encodeUrl').click(function () {
+	var val = $('#code_input').val()
+	var encodeVal = encodeURIComponent(val)
+	console.log('encodeVal ', encodeVal)
+	alert('转码结果为：' + encodeVal)
+	// document.getElementById('code_box').innerHTML = encodeVal
+})
+// $('#login_btn').click(function () {
+// 	var name = $('#set_cookie_name').val();
+// 	var value = $('#set_cookie_value').val()
+// 	// executeScriptToCurrentTab(`setCookie('${name}','${value}')`)
+// 	// setCookie(name, value)
+// 	// $('#set_cookie_name').val('');
+// 	// $('#set_cookie_value').val('');
+// 	// console.log('setCookie ', $('#set_cookie_name'))
+// })
+// 登录
+$('#login_btn').click(function () {
+	var loginInfo = $('#login_name').val();
+	var loginPwd = $('#login_value').val()
+	bol = $('#web_login_select').val()
+	console.log(' loginInfo,loginPwd,bol', loginInfo, loginPwd, bol)
+	if (bol === 'ClubFactoryApp') {
+		executeScriptToCurrentTab(`CFappLogin('${loginInfo}','${loginPwd}')`)
+	} else if (bol === 'ClubFactoryMsite') {
+		executeScriptToCurrentTab(`CFmSiteLogin('${loginInfo}','${loginPwd}')`)
+	} else if (bol === 'Hiboss') {
+		executeScriptToCurrentTab(`CFhibossLogin('${loginInfo}','${loginPwd}')`)
+	}
+	// if (!loginInfo) {
+	// 	window.utils.toast.error('Please enter ' + $('.login-info').attr('placeholder'));
+	// 	return false;
+	// }
 
+	// if(!loginPwd){
+	// 	window.utils.toast.error('Please enter password.');
+	// 	return false;
+	// }
+
+	// var isPhone = window.utils.validatePhone(loginInfo);
+	// var isEmail = window.utils.validateEmail(loginInfo);
+	// var isNum = window.utils.validateNumber(loginInfo);
+
+	// var loginType = isPhone ? 'Phone': 'Email';
+
+	// if(isNewVersion && !isPhone && isNum){
+	// 	window.utils.toast.error('Please enter a valid mobile number.');
+	// 	return false;
+	// }else if(!isNewVersion && !isEmail){
+	// 	window.utils.toast.error('Please enter a valid email.');
+	// 	return false;
+	// }
+
+	// 如果全是数字那么走手机登录，否则邮箱登录,暂时不判断号码长度，因为不同国家的长度不一样，虽然现在只是在印度
+	// $.ajax({
+	// 	type: 'POST',
+	// 	url: '/auth2/login-valid',
+	// 	data: {
+	// 		login_account: loginInfo,
+	// 		pwd: loginPwd,
+	// 		redirect: '/user_center'
+	// 	}
+	// }, function (error) {
+	// 	window.utils.GAEvents.GAMember('Login', 'Login with ' + loginType + ' & Failure:' + error);
+	// }, $(this)).then(function (resp) {
+	// 	console.log('登录成功')
+	// })
+
+});
 // $('#set_cookie').click(() => {
 // 	sendMessageToContentScript({ cmd: 'update_font_size', size: 42 }, function (response) { });
 // });

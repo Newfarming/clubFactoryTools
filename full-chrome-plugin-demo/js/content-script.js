@@ -3,16 +3,66 @@
 
 // executeScriptToCurrentTab('console.log("这是popup立即执行的代码")')
 // 注意，必须设置了run_at=document_start 此段代码才会生效
+window.setCookie = function (name, value) {
+	var Days = 30;
+	var exp = new Date();
+	exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+	document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+	console.log("这是popup向当前页发送的执行代码")
+}
+window.CFappLogin = function (loginInfo, loginPwd) {
+	console.log('loginInfo, loginPwd ', loginInfo, loginPwd)
+	$.ajax({
+		type: 'POST',
+		url: '/auth2/login-valid',
+		data: {
+			login_account: loginInfo,
+			pwd: loginPwd,
+			redirect: '/user_center'
+		}
+	}, function (error) {
+
+		alert('登录失败')
+	}, $(this)).then(function (resp) {
+		console.log('登录失败')
+	})
+}
+window.CFmSiteLogin = function (loginInfo, loginPwd) {
+	$.ajax({
+		url: '/api/v2/auth/login/',
+		type: 'POST',
+		data: {
+			email_addr: loginInfo,
+			email_passwd: loginPwd,
+			login_type: 3
+		},
+		success: function (result) {
+			console.log('result', result)
+			var userProfile = result.body.user_profile
+			var authorization = result.body.authorization
+			userProfile['authorization'] = authorization
+			if (userProfile) {
+				localStorage.setItem('user', JSON.stringify(userProfile))
+			} else {
+				localStorage.removeItem('user')
+			}
+
+			if (userProfile.sex) {
+				localStorage.setItem('gender', userProfile.sex)
+			}
+			window.location.reload()
+			console.log('登录成功')
+		}
+	})
+}
+
+window.CFhibossLogin = function (loginInfo, loginPwd) {
+
+}
 document.addEventListener('DOMContentLoaded', function () {
 	// 注入自定义JS
 	injectCustomJs();
-	window.setCookie = function (name, value) {
-		var Days = 30;
-		var exp = new Date();
-		exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-		document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
-		console.log("这是popup向当前页发送的执行代码")
-	}
+	console.log('DOMContentLoaded')
 	// document.setDD = 1
 	// console.log('window.setCookie', window.setCookie)
 	// console.log('document.setDD', document.setDD)

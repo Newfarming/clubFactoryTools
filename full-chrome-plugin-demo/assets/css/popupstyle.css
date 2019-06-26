@@ -1,0 +1,64 @@
+.cf-item{
+border:1px solid #e7e7e7;
+margin-top:-1px;
+}
+.cf-item-title{
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    width: 700px;
+    padding:0 10px;
+}
+body{
+    padding:10px;
+}
+
+.item-content{
+    display: none;
+    padding:0 20px 15px;
+    position: relative;
+    overflow: hidden;
+
+}
+.cf-item{
+    transition:all .3s;
+}
+.choose_web_box{
+    margin-top:10px;
+    margin-bottom:15px;
+}
+button{
+    background:linear-gradient(90deg,rgba(246,121,47,1) 0%,rgba(236,87,46,1) 100%);
+    border-radius:4px;
+    border:none;
+    color:#fff;
+}
+.btn_box{
+margin-top:  10px;
+}
+.login_qr_box{
+    /* position: absolute;
+    right: 100px;
+    top: 50px; */
+    float: right;
+ margin-right: 50px;
+}
+.url_qr_input{
+
+}
+.url_qr_box{
+    /* position: absolute;
+    right: 100px;
+    top: 50px; */
+    margin-top:10px;
+    margin-left: 10px;
+}
+.code_input{
+    width:100%;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 1em;
+    border:1px solid #ccc;
+    outline: none;
+    margin-bottom:7px;
+}
