@@ -191,6 +191,9 @@ window.addEventListener("message", function (e) {
 	else if (e.data && e.data.cmd == 'message') {
 		tip(e.data.data);
 	}
+	else if (e.data && e.data.cmd == 'dot') {
+		chrome.runtime.sendMessage({ action: "append", obj: e.data });
+	}
 }, false);
 
 

@@ -407,3 +407,44 @@ $('#check_media').click(e => {
 	alert('即将打开一个有视频的网站，届时将自动检测是否存在视频！');
 	chrome.tabs.create({ url: 'http://www.w3school.com.cn/tiy/t.asp?f=html5_video' });
 });
+
+$('#start_record').click(function () {
+	startRecord()
+})
+$('#stop_record').click(function () {
+	stopRecord()
+	chrome.tabs.create({ url: "../dot.html" });
+})
+chrome.runtime.sendMessage({ action: "get_status" }, function (response) {
+	console.log(' response', response)
+	if (response.active) {
+		// ui.set_started();
+		$('#dot_item_content').show()
+		$('.dot_state_content').html('正在记录')
+		console.log('已经开始记录')
+	} else {
+		$('#dot_item_content').hide()
+		$('.dot_state_content').html('还未记录')
+		console.log('还未开始记录')
+		if (!response.empty) {
+			// ui.set_stopped();
+		}
+		// chrome.tabs.getSelected(null, function (tab) {
+		// 	document.forms[0].elements["url"].value = tab.url;
+		// });
+	}
+});
+function startRecord() {
+	var nowUrl = document.forms[0].elements["url"].value;
+	chrome.tabs.getSelected(null, function (tab) {
+		chrome.runtime.sendMessage({
+			action: "start",
+			recorded_tab: tab.id,
+			start_url: nowUrl
+		});
+	});
+}
+
+function stopRecord() {
+	chrome.runtime.sendMessage({ action: "stop" });
+}

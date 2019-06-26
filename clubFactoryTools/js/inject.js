@@ -24,7 +24,11 @@ function sendMessageToContentScriptByPostMessage(data) {
 
 window.WebViewJavascriptBridge = {
 	callHandler: function (parm1, parm2, parm3) {
-		console.log('打点!!!', parm1, parm2, parm3)
+		var data = {
+			name: '打点',
+			content: [parm1, parm2, parm3]
+		}
+		window.postMessage({ cmd: 'dot', data: data }, '*');
 	}
 }
 console.log('injectJs')
