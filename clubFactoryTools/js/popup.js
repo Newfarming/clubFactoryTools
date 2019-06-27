@@ -16,6 +16,8 @@ var url = 'http://pre-pwa.clubfactory.com/home'
 
 var loginQrEle = document.getElementById('login_qr_box')
 function makeCode(qrEle, qrText) {
+
+	console.log('qrEle qrText', qrEle, qrText)
 	qrEle.innerHTML = ' '
 	var qrcode = new QRCode(qrEle, {
 		width: 100,
@@ -41,10 +43,8 @@ $('#web_login_select').change(function (e) {
 		$('#m_login_select').hide()
 		$('#app_login_select').hide()
 		$('#loginBox').hide()
-
 		site = $('#hiboss_login_select').val()
 		url = 'https://' + site + '.hibossapp.com/home/#/'
-
 	} else if (value === 'ClubFactoryMsite') {
 		$('#app_login_select').hide()
 		$('#m_login_select').show()
@@ -413,29 +413,42 @@ $('#start_record').click(function () {
 })
 $('#stop_record').click(function () {
 	stopRecord()
-	chrome.tabs.create({ url: "../dot.html" });
+	// chrome.tabs.create({ url: "../dot.html" });
 })
+function setStarted() {
+	$('#start_record').hide()
+	$('#stop_record').show()
+	$('.left-item[data-tip=record]').click()
+	$('.dot_state_content').html('正在记录打点中')
+}
+function setStoped() {
+	$('#start_record').show()
+	$('#stop_record').hide()
+	$('.dot_state_content').html('还未开始记录')
+}
 chrome.runtime.sendMessage({ action: "get_status" }, function (response) {
 	console.log(' response', response)
 	if (response.active) {
 		// ui.set_started();
-		$('#dot_item_content').show()
-		$('.dot_state_content').html('正在记录')
-		console.log('已经开始记录')
+		// $('#dot_item_content').show()
+		setStarted()
+		// console.log('已经开始记录')
 	} else {
-		$('#dot_item_content').hide()
-		$('.dot_state_content').html('还未记录')
-		console.log('还未开始记录')
+		setStoped()
+		// console.log('还未开始记录')
 		if (!response.empty) {
 			// ui.set_stopped();
+			chrome.runtime.sendMessage({ action: "stop" });
 		}
-		// chrome.tabs.getSelected(null, function (tab) {
-		// 	document.forms[0].elements["url"].value = tab.url;
-		// });
 	}
+	chrome.tabs.getSelected(null, function (tab) {
+		$('#url_record').val(tab.url)
+		// document.forms[0].elements["url"].value = tab.url;
+	});
 });
 function startRecord() {
-	var nowUrl = document.forms[0].elements["url"].value;
+	var nowUrl = $('#url_record').val()
+	setStarted()
 	chrome.tabs.getSelected(null, function (tab) {
 		chrome.runtime.sendMessage({
 			action: "start",
@@ -446,5 +459,46 @@ function startRecord() {
 }
 
 function stopRecord() {
-	chrome.runtime.sendMessage({ action: "stop" });
+	setStoped()
+	chrome.runtime.sendMessage({ action: "get_items" }, function (response) {
+		chrome.runtime.sendMessage({ action: "stop" });
+		// chrome.runtime.sendMessage({ action: "showrecord" });
+	});
 }
+
+$('.left-item').click(function () {
+	$('.left-item').removeClass('active')
+	$(this).addClass('active')
+	$('.right-content').hide()
+	var tip = $(this).data('tip')
+	console.log('tip', tip)
+	$('.right-content-lists').find('.' + tip).show()
+})
+
+
+function deepLinkTransform(url) {
+	var mainUrl = url.split('://')[1]
+	var targets = mainUrl.split('/')
+	var target1 = targets[1]
+	// var returnUrl1 =
+	if (target1.match(/^product_list/)) {
+		return 'fromfactory://clubfactory/main?' + 'select_tab=' + 'home'
+	} else if (target1.match(/^account/)) {
+		return 'fromfactory://clubfactory/main?' + 'select_tab=' + 'account'
+	} else if (target1.match(/^category/)) {
+		return 'fromfactory://clubfactory/main?' + 'select_tab=' + 'category'
+	} else if (target1.match(/^social/)) {
+		return 'fromfactory://clubfactory/main?' + 'select_tab=' + 'social'
+	} else {
+		return 'fromfactory://clubfactory/web?' + 'url=' + url
+	}
+}
+
+$('#transform_deeplink').click(function () {
+	var oriUrl = $('#deeplink_input').val()
+
+	var returnUrl = deepLinkTransform(oriUrl)
+
+	$('#deeplinkBox').html(returnUrl)
+
+})

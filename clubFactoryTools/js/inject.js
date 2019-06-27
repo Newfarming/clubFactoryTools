@@ -21,14 +21,40 @@ function sendMessageToContentScriptByPostMessage(data) {
 	window.sendMessageToContentScriptByEvent = sendMessageToContentScriptByEvent;
 })();
 
-
 window.WebViewJavascriptBridge = {
 	callHandler: function (parm1, parm2, parm3) {
 		var data = {
 			name: '打点',
 			content: [parm1, parm2, parm3]
 		}
-		window.postMessage({ cmd: 'dot', data: data }, '*');
+		console.log(' 打点统计 ', parm1, parm2, parm3)
+		try {
+			top.postMessage({ cmd: 'dot', data: data }, '*');
+			// window.postMessage(JSON.stringify({ cmd: 'dot', data: data }), '*');
+			// chrome.runtime.sendMessage({ action: "append", obj: data });
+		} catch (e) {
+
+		}
 	}
 }
+
+setTimeout(function () {
+	window.WebViewJavascriptBridge = {
+		callHandler: function (parm1, parm2, parm3) {
+			var data = {
+				name: '打点',
+				content: [parm1, parm2, parm3]
+			}
+			console.log(' 打点统计 ', parm1, parm2, parm3)
+			try {
+				top.postMessage({ cmd: 'dot', data: data }, '*');
+				// window.postMessage(JSON.stringify({ cmd: 'dot', data: data }), '*');
+				// chrome.runtime.sendMessage({ action: "append", obj: data });
+			} catch (e) {
+
+			}
+		}
+	}
+}, 3000)
+
 console.log('injectJs')

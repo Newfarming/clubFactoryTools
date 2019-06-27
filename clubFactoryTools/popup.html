@@ -11,7 +11,7 @@
 	<style>
 		body {
 			font-family: 'Microsoft Yahei';
-			width: 500px;
+			width: 700px;
 			min-height: 100px;
 		}
 
@@ -22,7 +22,7 @@
 </head>
 
 <body>
-	<div class="cf-list">
+	<!-- <div class="cf-list">
 		<h2>clubFactory</h2>
 		<form>
 			<div class="cf-item">
@@ -30,12 +30,6 @@
 					登录设置
 				</div>
 				<div class="item-content">
-					<!-- <select id="web_login_select">
-						<option value="ClubFactoryApp">Club Factory M站</option>
-						<option value="ClubFactoryApp">Club Factory App</option>
-						<option value="Hiboss">Hiboss</option>
-					</select> -->
-
 					<div class="choose_web_box">
 						登录网站：
 						<select id="web_login_select">
@@ -129,6 +123,128 @@
 				</div>
 			</div>
 		</form>
+	</div> -->
+	<h2>clubFactory</h2>
+	<div class="cf-newlist">
+		<div class="g-leftside">
+			<div class="left-item-lists">
+				<div class="left-item active" data-tip="login">登录设置</div>
+				<div class="left-item" data-tip="cookie">cookie设置</div>
+				<div class="left-item" data-tip="qrcode">URL地址生成二维码</div>
+				<div class="left-item" data-tip="base64">base64转码</div>
+				<div class="left-item" data-tip="record">打点记录</div>
+				<div class="left-item" data-tip="deeplink">deeplink转换</div>
+				<div class="left-item" data-tip="enter">Club Factory常用工具入口</div>
+			</div>
+		</div>
+		<div class="g-righside">
+			<div class="right-content-lists">
+				<div class="right-content login">
+					<div class="cf-item-title">
+						登录设置
+					</div>
+					<div class="item-content">
+						<div class="choose_web_box">
+							登录网站：
+							<select id="web_login_select">
+								<option value="ClubFactoryMsite">Club Factory M站</option>
+								<option value="ClubFactoryApp">Club Factory App</option>
+								<option value="Hiboss">Hiboss</option>
+							</select>
+							<select id="app_login_select" style="display: none">
+								<option value="pre">pre</option>
+								<option value="test">test</option>
+								<option value="test02">test02</option>
+								<option value="test03">test03</option>
+								<option value="test04">test04</option>
+								<option value="test05">test05</option>
+								<option value="test06">test06</option>
+								<option value="test07">test07</option>
+								<option value="test08">test08</option>
+								<option value="test09">test09</option>
+								<option value="test10">test10</option>
+							</select>
+							<select id="m_login_select">
+								<option value="pwa-pre">pre</option>
+								<option value="pwa-test">pwa-test</option>
+								<option value="pwa-test2">pwa-test2</option>
+							</select>
+							<select id="hiboss_login_select" style="display: none">
+								<option value="pre">pre</option>
+								<option value="test">test</option>
+							</select>
+							<div class="btn_box">
+								<button id="jump_url">进入首页</button>
+								<button id="jump_login_url">进入登录页</button>
+							</div>
+							<div class="login_qr_box" id="login_qr_box"></div>
+						</div>
+						<div id="loginBox">
+							<p>邮箱：<input type="text" id="login_name" /></p>
+							<p>密码：<input type="password" id="login_value" /></p>
+							<button id="login_btn">登陆</button>
+						</div>
+					</div>
+				</div>
+				<div class="right-content cookie" data-tip="cookie">
+					<div class="cf-item-title">
+						cookie设置
+					</div>
+					<div class="item-content">
+						<p>Cookie变量名：<input type="text" id="set_cookie_name" /></p>
+						<p>Cookie变量值：<input type="text" id="set_cookie_value" /></p>
+						<button id="set_cookie">设置Cookie</button>
+					</div>
+				</div>
+				<div class="right-content qrcode" data-tip="qrcode">
+					<div class="cf-item-title">
+						URL地址生成二维码
+					</div>
+					<div class="item-content">
+						<input type="text" class="code_input" placeholder="请输入URL地址" id="url_qr_input">
+						<div class="url_qr_box" id="url_qr_box"></div>
+					</div>
+				</div>
+				<div class="right-content base64" data-tip="base64">
+					<div class="cf-item-title">
+						base64转码
+					</div>
+					<div class="item-content">
+						<div class="">
+							<textarea type="text" class="code_input" placeholder="请输入需要转码或解码的url地址"
+								id="code_input"></textarea>
+							<button id="decodeUrl">解码</button>
+							<button id="encodeUrl">转码</button>
+							<div id="code_box"></div>
+						</div>
+					</div>
+				</div>
+				<div class="right-content record">
+					<div class="cf-item-title">
+						打点记录
+					</div>
+					<div class="item-content" id="dot_item_content">
+						<textarea type="text" class="code_input" placeholder="请输入需要转码或解码的url地址"
+							id="url_record"></textarea>
+						<button id="start_record">开始记录打点</button>
+						<button id="stop_record">停止记录打点</button>
+						<div class="dot_state_content"></div>
+					</div>
+				</div>
+				<div class="right-content deeplink">
+					<div class="cf-item-title">
+						deeplink转换
+					</div>
+					<div class="item-content" id="dot_item_content">
+						<textarea type="text" class="deeplink_input" id="deeplink_input"
+							placeholder="请输入需要转换为deeplink的url地址" id="url_record"></textarea>
+						<div id="deeplinkBox"></div>
+						<button id="transform_deeplink">转换为deeplink</button>
+					</div>
+				</div>
+				<div class="right-content enter">Club Factory常用工具入口</div>
+			</div>
+		</div>
 	</div>
 	<!---
 	<h2>background</h2>

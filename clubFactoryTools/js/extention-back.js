@@ -32,11 +32,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }
     }
     if (request.action == "stop") {
+        // alert("你已停止打点");
         active = false;
-        chrome.tabs.sendMessage(tab_id, { action: "stop" });
+        chrome.tabs.sendMessage(tab_id, { action: "stop", data: testcase_items });
+        sendResponse({});
+    }
+    if (request.action == 'showrecord') {
+        chrome.tabs.sendMessage(tab_id, { action: "showrecord", data: testcase_items });
         sendResponse({});
     }
     if (request.action == "get_items") {
         sendResponse({ items: testcase_items });
     }
 });
+// console.log('testcase_items', testcase_items)
